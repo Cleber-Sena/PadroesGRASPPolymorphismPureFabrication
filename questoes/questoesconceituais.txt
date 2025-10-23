@@ -1,0 +1,77 @@
+Questões Conceituais
+
+1. Pure Fabrication: Qual foi a classe criada na atividade que é um exemplo do
+padrão Pure Fabrication? Por que ela é considerada uma "invenção pura" e qual
+tipo de responsabilidade ela assumiu?
+
+R: ServicoNotificacao. Porque ela não representa o domínio e sua responsabilidade é gerenciar a funcionalidades de
+infraestrutura (que é basicamente o envio de mensagens). 
+
+
+2. Alta Coesão: Como o padrão Pure Fabrication (a classe que você identificou na
+Questão 1) ajudou a manter a Alta Coesão da classe de domínio Pedido?
+
+R: Basicamente, atribuindo a responsabilidade de notificação para a classe ServicoNotificacao. Ao passar a responsabilidade de notificação para uma classe separada, a classe Pedido se mantém coesa, realizando apenas suas responsablidades.
+
+
+3. Polymorphism: Na atividade, o Polimorfismo foi implementado usando qual
+recurso do Java? E qual é o método comum que todas as classes de notificação
+(Email e SMS) devem implementar?
+
+R: o recurso foi Interface. O método que foi implementado de formas diferentes (Polimorfismo) é o void enviar(String destinatario, String mensagem);
+
+
+4. Flexibilidade do Polimorfismo: Se o cliente decidisse adicionar uma nova
+forma de notificação (por exemplo, NotificacaoPush), quantas classes
+existentes precisaríamos modificar? E qual seria o processo para integrar essa
+nova funcionalidade?
+
+R: Por conta do polimorfismo, nenhuma classe precisaria ser modificada. Para integrar uma nova classe basicamente seria:
+cria a nova classe, nesse caso NotificationPush -> implementa a interface Notificacao nessa nova classe -> implementa o método enviar (não esquece do @Override). 
+
+
+5. Acoplamento (Conceito): O que é o "acoplamento" no contexto de
+programação orientada a objetos? Como o uso da interface Notificacao no
+ServicoNotificacao (Pure Fabrication) contribui para o Baixo
+Acoplamento?
+
+R: Acoplamento é o grau de dependência entre diferentes classes ou módulos em um sistema. Basicamente, é a força com que uma classe depende de outra. 
+O uso da interface Notificacao contribui para o baixo acoplamento porque ela permite que ServicoNotificacao não precise saber detalhes específicos de como a notificação será enviada, ela faz com que o ServicoNotificacao fique independente das classes específicas de notificação. Assim, se for criado outras formas de notificação o ServicoNotificacao vai continuar funcionando sem precisar ser modificado.
+
+
+6. Variedade de Comportamentos: Explique a diferença no comportamento do
+método enviar() entre a classe NotificacaoEmail e a classe
+NotificacaoSms. Como o polimorfismo permite essa variação sem mudar a
+classe que as utiliza (ServicoNotificacao)?
+
+R: O método enviar() tem comportamentos diferentes nas classes NotificacaoEmail e NotificacaoSms devido à forma como cada uma lida com os dados: no NotificacaoEmail
+o método enviar() vai enviar um e-mail completo, com o corpo da mensagem e destinatário. Já no notificacaoSms o método enviar() vai enviar uma mensagem só que de SMS, com um limite de caracteres (50 caracteres), já que uma mensagem de SMS é mais curta que a de um e-mail.
+O polimorfismo permite a classe ServicoNotificacao tratar o método enviar() de igualemnte, chamando-o da mesma maneira independente do tipo de notificação (e-mail, SMS, etc.). 
+O comportamento do metodo enviar() será determinado pela classe específica que implementa a interface Notificacao.
+
+
+7. Information Expert vs. Pure Fabrication: Se tivéssemos seguido o padrão
+Information Expert estritamente, qual classe teria sido a candidata a enviar a
+notificação? Por que essa escolha seria ruim, justificando o uso do Pure
+Fabrication?
+
+R: Seria a classe Pedido, tendo em vista que ela é a que contem mais informações essenciais sobre o cliente (id, email, telefone e o status do pedido), necessárias para preencher a notificação.
+Isso seria ruim porque causaria na quebra do princípio da Alta Coesão e de Baixo Acoplamento (Pedido deve ser responsável apenas pelas ações relacionadas ao pedido, se ele for ser responsável por enviar notificações, isso sobrecarregaria a classe com uma responsabilidade que não cabe a ela e deixaria o código mais acoplado).
+Usar o Pure Fabrication é melhor porque a responsabilidade é atribuida a ServicoNotificacao, permitindo assim um o código mais coeso e flexivel, sem sobrecarregar a classe Pedido com responsabilidades que não seriam dela.
+
+
+8. Vantagem do ServicoNotificacao: Em um cenário de testes (unidade), qual
+das classes é mais fácil de testar isoladamente: o Pedido com a lógica de envio
+de email dentro dele, ou o ServicoNotificacao separado, como fizemos?
+Por quê?
+
+R: ServicoNotificacao. Porque seria mais fácil para testar, já que ela taria isolada da lógica de domínio e ServicoNotificacao é uma classe focada em uma única responsabilidade: enviar notificações.
+
+
+
+
+
+
+
+
+
